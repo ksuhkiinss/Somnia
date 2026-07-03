@@ -1,0 +1,186 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 25px 30px;
+}
+
+/* ---------- Header ---------- */
+
+.logo {
+    text-align: center;
+}
+
+.logo h1 {
+    font-size: 72px;
+    color: var(--primary);
+    letter-spacing: 2px;
+}
+
+.logo p {
+    color: var(--text-light);
+    font-size: 18px;
+}
+
+.menu-button,
+.profile-button {
+
+    width: 60px;
+    height: 60px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: white;
+
+    box-shadow: var(--shadow);
+
+    cursor: pointer;
+
+    font-size: 24px;
+
+    transition: all .3s ease;
+}
+
+.menu-button:hover,
+.profile-button:hover {
+
+    transform: translateY(-3px) scale(1.05);
+
+}
+
+/* ---------- Welcome ---------- */
+
+.welcome-section {
+
+    max-width: 1100px;
+    margin: 20px auto;
+    padding: 0 20px;
+
+}
+
+.welcome-text h2 {
+
+    font-size: 42px;
+    color: var(--text);
+    margin-bottom: 10px;
+
+}
+
+.welcome-text p {
+
+    font-size: 22px;
+    color: var(--text-light);
+
+}
+
+/* ---------- Sleep Card ---------- */
+
+.sleep-card {
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 60px;
+
+    max-width: 1100px;
+
+    margin: 40px auto;
+
+    padding: 50px;
+
+    background: white;
+
+    border-radius: 30px;
+
+    box-shadow: var(--shadow);
+
+}
+
+.sleep-image {
+
+    font-size: 150px;
+
+}
+
+.sleep-info{
+
+    gap:18px;
+}
+
+.sleep-info h2 {
+
+    color: var(--text-light);
+
+    font-size: 24px;
+
+    margin-bottom: 20px;
+
+}
+
+.sleep-info h1 {
+
+    color: var(--text);
+
+    font-size: 64px;
+
+    margin-bottom: 20px;
+
+}
+
+.rating {
+
+    font-size: 36px;
+
+    margin-bottom: 20px;
+
+}
+
+.sleep-info p {
+
+    color: var(--primary);
+
+    font-size: 24px;
+
+}
+
+.sleep-button {
+
+    width: 240px;
+    height: 220px;
+
+    border: none;
+    border-radius: 30px;
+
+    background: var(--primary-light);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    gap: 15px;
+
+    cursor: pointer;
+
+    transition: all .3s ease;
+
+}
+
+.sleep-button:hover {
+
+    transform: translateY(-6px);
+
+    box-shadow: var(--shadow);
+
+}
+
+.button-icon {
+
+    font-size: 58px;
+
+}

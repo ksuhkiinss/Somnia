@@ -1,0 +1,181 @@
+.stats-section{
+
+    max-width:1100px;
+
+    margin:40px auto;
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:25px;
+
+}
+
+.stat-card{
+
+    background:white;
+
+    border-radius:25px;
+
+    padding:30px;
+
+    box-shadow:var(--shadow);
+
+    text-align:center;
+
+    transition:.3s;
+
+}
+
+.stat-card:hover{
+
+    transform:translateY(-6px);
+
+}
+
+.icon{
+
+    font-size:42px;
+
+    margin-bottom:15px;
+
+}
+
+.stat-card h2{
+
+    font-size:30px;
+
+    color:var(--text);
+
+    margin-bottom:10px;
+
+}
+
+.stat-card p{
+
+    color:var(--text-light);
+
+}
+
+/* =============================== */
+
+.bottom-section{
+
+    max-width:1100px;
+
+    margin:40px auto;
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:25px;
+
+}
+
+/* =============================== */
+
+.record-card,
+.goal-card{
+
+    background:white;
+
+    border-radius:30px;
+
+    padding:35px;
+
+    box-shadow:var(--shadow);
+
+}
+
+/* =============================== */
+
+.record-card h2,
+.goal-card h2{
+
+    margin-bottom:25px;
+
+    font-size:28px;
+
+}
+
+/* =============================== */
+
+.record-date{
+
+    color:var(--text-light);
+
+    margin-bottom:10px;
+
+}
+
+/* =============================== */
+
+.record-time{
+
+    font-size:34px;
+
+    font-weight:bold;
+
+    margin-bottom:15px;
+
+}
+
+/* =============================== */
+
+.goal-circle{
+
+    width:180px;
+
+    height:180px;
+
+    border-radius:50%;
+
+    border:15px solid #d7c3ff;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    margin:30px auto;
+
+    font-size:34px;
+
+    font-weight:bold;
+
+}
+
+/* =============================== */
+
+.record-button{
+
+    margin-top:25px;
+
+    width:100%;
+
+    border:none;
+
+    border-radius:15px;
+
+    padding:16px;
+
+    background:var(--primary-light);
+
+    cursor:pointer;
+
+    font-size:18px;
+
+    transition:.3s;
+
+}
+
+.record-button:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:var(--shadow);
+
+}
