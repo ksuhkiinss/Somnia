@@ -6,6 +6,8 @@ const timer = document.getElementById("sleepTimer");
 let sleeping = false;
 let startTime;
 let interval;
+let hours = 0;
+let minutes = 0;
 
 button.addEventListener("click", () => {
 
@@ -25,23 +27,31 @@ button.addEventListener("click", () => {
 
         interval = setInterval(updateTimer, 1000);
 
-    } else {
+    } 
 
-        sleeping = false;
+    else {
 
-        clearInterval(interval);
+    sleeping = false;
 
-        localStorage.removeItem("sleepStart");
+    clearInterval(interval);
+    localStorage.removeItem("sleepStart");
 
-        buttonText.textContent = "Почати сон";
+    buttonText.textContent = "Почати сон";
 
-        button.style.background = "";
+    button.style.background = "";
 
-        button.style.color = "";
+    button.style.color = "";
 
-        timer.textContent = "😴 Сон завершено";
+    timer.textContent = "😴 Сон завершено";
+console.log("Відкриваю модальне вікно");
+    // показуємо модальне вікно
+    document.getElementById("sleepModal").style.display = "flex";
 
-    }
+    // показуємо тривалість
+    document.getElementById("modalDuration").textContent =
+        `Ви спали ${hours} год ${minutes} хв`;
+
+}
 
 });
 
@@ -51,10 +61,8 @@ function updateTimer(){
 
     const diff = now - startTime;
 
-    const hours = Math.floor(diff / 1000 / 60 / 60);
-
-    const minutes = Math.floor(diff / 1000 / 60) % 60;
-
+    hours = Math.floor(diff / 1000 / 60 / 60);
+    minutes = Math.floor(diff / 1000 / 60) % 60;
     const seconds = Math.floor(diff / 1000) % 60;
 
     timer.innerHTML = `
@@ -83,3 +91,15 @@ function restoreSleep() {
 }
 
 restoreSleep();
+
+const closeButton = document.querySelector(".close-modal");
+
+if (closeButton) {
+
+    closeButton.addEventListener("click", () => {
+
+        document.getElementById("sleepModal").style.display = "none";
+
+    });
+
+}

@@ -1,0 +1,204 @@
+.modal{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.45);
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:1000;
+
+}
+
+.modal-content{
+
+    width:600px;
+
+    background:white;
+
+    border-radius:30px;
+
+    padding:40px;
+
+    box-shadow:var(--shadow);
+
+    animation:popup .3s ease;
+
+}
+
+@keyframes popup{
+
+    from{
+
+        transform:scale(.9);
+
+        opacity:0;
+
+    }
+
+    to{
+
+        transform:scale(1);
+
+        opacity:1;
+
+    }
+
+}
+
+.modal h2{
+
+    text-align:center;
+
+    margin-bottom:20px;
+
+}
+
+.modal-duration{
+
+    text-align:center;
+
+    color:var(--primary);
+
+    font-size:26px;
+
+    margin-bottom:30px;
+
+}
+
+.rating-select,
+.mood-select{
+
+    margin-bottom:25px;
+
+}
+
+.stars{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:12px;
+
+    font-size:36px;
+
+    margin-top:10px;
+
+}
+
+.moods{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:15px;
+
+    margin-top:10px;
+
+}
+
+.moods button{
+
+    width:60px;
+
+    height:60px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#F5F2FF;
+
+    cursor:pointer;
+
+    font-size:28px;
+
+    transition:.2s;
+
+}
+
+.moods button:hover{
+
+    transform:scale(1.1);
+
+}
+
+textarea{
+
+    width:100%;
+
+    border:none;
+
+    background:#F7F7FB;
+
+    border-radius:18px;
+
+    padding:15px;
+
+    margin-top:15px;
+
+    resize:none;
+
+    font-size:16px;
+
+}
+
+.save-sleep{
+
+    margin-top:25px;
+
+    width:100%;
+
+    padding:18px;
+
+    border:none;
+
+    border-radius:18px;
+
+    background:var(--primary);
+
+    color:white;
+
+    font-size:20px;
+
+    cursor:pointer;
+
+}
+
+.close-modal {
+
+    margin-top: 15px;
+
+    width: 100%;
+
+    padding: 18px;
+
+    border: 2px solid var(--primary);
+
+    border-radius: 18px;
+
+    background: white;
+
+    color: var(--primary);
+
+    font-size: 18px;
+
+    cursor: pointer;
+
+    transition: .3s;
+
+}
+
+.close-modal:hover {
+
+    background: var(--primary-light);
+
+}
