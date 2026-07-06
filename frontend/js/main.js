@@ -15,6 +15,8 @@ button.addEventListener("click", () => {
 
         startTime = new Date();
 
+        localStorage.setItem("sleepStart", startTime.toISOString());
+
         buttonText.textContent = "Прокинувся";
 
         button.style.background = "#8B5CF6";
@@ -28,6 +30,8 @@ button.addEventListener("click", () => {
         sleeping = false;
 
         clearInterval(interval);
+
+        localStorage.removeItem("sleepStart");
 
         buttonText.textContent = "Почати сон";
 
@@ -53,7 +57,29 @@ function updateTimer(){
 
     const seconds = Math.floor(diff / 1000) % 60;
 
-    timer.textContent =
-        `😴 Сон триває ${String(hours).padStart(2,"0")}:${String(minutes).padStart(2,"0")}:${String(seconds).padStart(2,"0")}`;
+    timer.innerHTML = `
+    😴 Сон триває<br><br>
+    ${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}
+`;
+}
+function restoreSleep() {
+
+    const savedTime = localStorage.getItem("sleepStart");
+
+    if (!savedTime) return;
+
+    sleeping = true;
+    startTime = new Date(savedTime);
+
+    buttonText.textContent = "Прокинувся";
+
+    button.style.background = "#8B5CF6";
+    button.style.color = "white";
+
+    updateTimer();
+
+    interval = setInterval(updateTimer, 1000);
 
 }
+
+restoreSleep();
