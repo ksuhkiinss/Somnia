@@ -295,6 +295,24 @@ async function loadLastSleep() {
     console.log("Все оновлено");
 }
 
+function formatLocalDate(date) {
+
+    const year = date.getFullYear();
+
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+
+    const day = String(date.getDate()).padStart(2, "0");
+
+    const hours = String(date.getHours()).padStart(2, "0");
+
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+
+    const seconds = String(date.getSeconds()).padStart(2, "0");
+
+    return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
+
+}
+
 // ==========================
 // Збереження сну
 // ==========================
@@ -317,9 +335,9 @@ saveButton.addEventListener("click", async () => {
 
         body: JSON.stringify({
 
-            start_time: startTime.toISOString(),
+            start_time: formatLocalDate(startTime),
 
-            end_time: endTime.toISOString(),
+            end_time: formatLocalDate(endTime),
 
             duration,
 
