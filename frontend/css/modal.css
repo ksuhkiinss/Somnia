@@ -87,9 +87,39 @@
 
     gap:12px;
 
-    font-size:36px;
+    margin-top:15px;
 
-    margin-top:10px;
+}
+
+.stars span{
+
+    font-size:42px;
+
+    cursor:pointer;
+
+    transition:all .25s ease;
+
+    opacity:.35;
+
+    transform:scale(1);
+
+    user-select:none;
+
+}
+
+.stars span:hover{
+
+    transform:scale(1.25);
+
+}
+
+.stars span.active{
+
+    opacity:1;
+
+    transform:scale(1.18);
+
+    filter:drop-shadow(0 0 8px gold);
 
 }
 
@@ -107,9 +137,9 @@
 
 .moods button{
 
-    width:60px;
+    width:65px;
 
-    height:60px;
+    height:65px;
 
     border:none;
 
@@ -119,9 +149,27 @@
 
     cursor:pointer;
 
-    font-size:28px;
+    font-size:30px;
 
-    transition:.2s;
+    transition:all .25s ease;
+
+}
+
+.moods button:hover{
+
+    transform:scale(1.15);
+
+}
+
+.moods button.active{
+
+    background:#8B5CF6;
+
+    color:white;
+
+    transform:scale(1.18);
+
+    box-shadow:0 0 18px rgba(139,92,246,.45);
 
 }
 
@@ -200,5 +248,19 @@ textarea{
 .close-modal:hover {
 
     background: var(--primary-light);
+
+}
+
+.stars span{
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+.stars span:hover{
+
+    transform:scale(1.2);
 
 }

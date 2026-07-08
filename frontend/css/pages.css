@@ -193,3 +193,43 @@
     font-weight:600;
 
 }
+
+.history-section{
+
+    margin-top:40px;
+
+}
+
+.history-section h2{
+
+    margin-bottom:20px;
+
+}
+
+.history-card{
+
+    background:white;
+
+    border-radius:25px;
+
+    padding:20px;
+
+    margin-bottom:20px;
+
+    box-shadow:var(--shadow);
+
+}
+
+.history-card h3{
+
+    color:var(--primary);
+
+    margin-bottom:10px;
+
+}
+
+.history-card p{
+
+    margin:8px 0;
+
+}

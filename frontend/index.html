@@ -51,17 +51,24 @@
 
         <h2>Тривалість минулого сну</h2>
 
-        <h1>8 год. 46 хв.</h1>
+        <h1 id="mainDuration">
+            ---
+        </h1>
 
-        <div class="rating">
+        <div class="rating" id="mainRating">
             ⭐⭐⭐⭐⭐
-        </div>
+    </div>
 
-        <p>😊 Почуваюсь добре</p>
+    <p id="mainMood">
+        😊
+    </p>
 
     </div>
 
-    <button class="sleep-button" id="sleepButton">
+    <button
+    type="button"
+    class="sleep-button"
+    id="sleepButton">
 
     <div class="button-icon">
         🌙
@@ -87,7 +94,9 @@
 
         <div class="icon">⏰</div>
 
-        <h2>56 год. 32 хв.</h2>
+        <h2 id="totalSleep">
+            ---
+        </h2>
 
         <p>Загальна тривалість</p>
 
@@ -97,7 +106,9 @@
 
         <div class="icon">🎯</div>
 
-        <h2>18</h2>
+        <h2 id="goalDays">
+            ---
+        </h2>
 
         <p>Днів з ціллю</p>
 
@@ -107,7 +118,9 @@
 
         <div class="icon">🌙</div>
 
-        <h2>12</h2>
+        <h2 id="sleepDays">
+            ---
+        </h2>
 
         <p>Днів зі снами</p>
 
@@ -117,7 +130,9 @@
 
         <div class="icon">📈</div>
 
-        <h2>7 год. 34 хв.</h2>
+        <h2 id="averageSleep">
+            ---
+        </h2>
 
         <p>Середній сон</p>
 
@@ -127,27 +142,35 @@
 
 <section class="bottom-section">
 
-    <div class="record-card">
+<div class="record-card">
 
-        <h2>📝 Останній запис</h2>
+    <h2>📝 Останній запис</h2>
 
-        <p class="record-date">2 липня 2026</p>
+    <p class="record-date" id="lastDate">
+        ---
+    </p>
 
-        <div class="record-time">
-            22:45 — 07:31
-        </div>
-
-        <p>🌙 8 год. 46 хв.</p>
-
-        <div class="rating">
-            ⭐⭐⭐⭐⭐
-        </div>
-
-        <button class="record-button">
-            Відкрити запис
-        </button>
-
+    <div class="record-time" id="lastTime">
+        ---
     </div>
+
+    <p id="lastDuration">
+        🌙 ---
+    </p>
+
+    <div class="rating" id="lastRating">
+        ⭐⭐⭐⭐⭐
+    </div>
+
+    <p id="lastMood">
+        😊
+    </p>
+
+    <button class="record-button">
+        Відкрити запис
+    </button>
+
+</div>
 
     <div class="goal-card">
 
@@ -167,6 +190,7 @@
 
 </section>
 
+
 <!-- Модальне вікно завершення сну -->
 
 <div class="modal" id="sleepModal">
@@ -183,15 +207,15 @@
 
             <p>Оцініть сон</p>
 
-            <div class="stars">
+<div class="stars" id="ratingStars">
 
-                <span>⭐</span>
-                <span>⭐</span>
-                <span>⭐</span>
-                <span>⭐</span>
-                <span>⭐</span>
+    <span data-rating="1">⭐</span>
+    <span data-rating="2">⭐</span>
+    <span data-rating="3">⭐</span>
+    <span data-rating="4">⭐</span>
+    <span data-rating="5">⭐</span>
 
-            </div>
+</div>
 
         </div>
 
@@ -199,40 +223,50 @@
 
             <p>Як почуваєтесь?</p>
 
-            <div class="moods">
+<div class="moods">
 
-                <button>😊</button>
-                <button>😄</button>
-                <button>😐</button>
-                <button>😴</button>
-                <button>😣</button>
+<button type="button" data-mood="😊">😊</button>
+<button type="button" data-mood="😄">😄</button>
+<button type="button" data-mood="😐">😐</button>
+<button type="button" data-mood="😴">😴</button>
+<button type="button" data-mood="😣">😣</button>
 
-            </div>
+</div>
 
         </div>
 
         <textarea
+            id="dreamInput"
             placeholder="💭 Щось снилося?"
-            rows="4">
-        </textarea>
+            rows="4"></textarea>
 
         <textarea
+            id="noteInput"
             placeholder="📝 Нотатка"
-            rows="4">
-        </textarea>
+            rows="4"></textarea>
 
-        <button class="save-sleep">
+<button class="save-sleep" id="saveSleep">
+    Зберегти
+</button>
 
-            Зберегти
-
-        </button>
-        <button class="close-modal">
+<button type="button" class="close-modal">
     Закрити
 </button>
 
+</div>
+</div>
+
+<!-- Історія -->
+
+<section class="history-section">
+
+    <h2>📖 Історія сну</h2>
+
+    <div id="historyList">
+
     </div>
 
-</div>
+</section>
 
 </main>
 
