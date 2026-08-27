@@ -10,14 +10,42 @@ const buttonText = document.getElementById("buttonText");
 const timer = document.getElementById("sleepTimer");
 
 const saveButton = document.getElementById("saveSleep");
+
 const dreamInput = document.getElementById("dreamInput");
 const noteInput = document.getElementById("noteInput");
 
 const stars = document.querySelectorAll("#ratingStars span");
-const moods = document.querySelectorAll(".moods button");
+
+// Виправлено:
+// тепер беремо mood тільки з модального вікна завершення сну
+const moods = document.querySelectorAll("#sleepModal .moods button");
 
 const modal = document.getElementById("sleepModal");
 const modalDuration = document.getElementById("modalDuration");
+
+const manualButton = document.getElementById("addSleepButton");
+const manualModal = document.getElementById("manualSleepModal");
+const closeManual = document.getElementById("closeManualModal");
+
+const manualDate = document.getElementById("manualDate");
+const manualStart = document.getElementById("manualStart");
+const manualEnd = document.getElementById("manualEnd");
+
+const manualDream = document.getElementById("manualDream");
+const manualNote = document.getElementById("manualNote");
+
+const saveManualSleep = document.getElementById("saveManualSleep");
+
+const manualStars = document.querySelectorAll("#manualRating span");
+
+const manualMoods = document.querySelectorAll("#manualMoods button");
+
+const openLastRecord = document.getElementById("openLastRecord");
+
+const recordModal = document.getElementById("recordModal");
+
+const closeRecordModal = document.getElementById("closeRecordModal");
+
 
 // ==========================
 // Змінні
@@ -33,12 +61,43 @@ let minutes = 0;
 let selectedRating = 5;
 let selectedMood = "😊";
 
+let lastSleepRecord = null;
+
+let manualRating = 5;
+let manualMood = "😊";
+
+
+// ==========================
+// Поточна дата
+// ==========================
+
+function updateCurrentDate() {
+
+    const date = new Date();
+
+    document.getElementById("currentDate").textContent =
+        "Сьогодні " +
+        date.toLocaleDateString("uk-UA", {
+            day: "numeric",
+            month: "long",
+            year: "numeric"
+        });
+
+}
+
+updateCurrentDate();
+
+
 // ==========================
 // Початковий стан
 // ==========================
 
 stars.forEach(star => star.classList.add("active"));
 moods[0].classList.add("active");
+
+manualStars.forEach(star => star.classList.add("active"));
+manualMoods[0].classList.add("active");
+
 
 // ==========================
 // Кнопка Почати сон
@@ -52,7 +111,10 @@ button.addEventListener("click", () => {
 
         startTime = new Date();
 
-        localStorage.setItem("sleepStart", startTime.toISOString());
+        localStorage.setItem(
+            "sleepStart",
+            startTime.toISOString()
+        );
 
         buttonText.textContent = "Прокинувся";
 
@@ -68,6 +130,7 @@ button.addEventListener("click", () => {
         sleeping = false;
 
         clearInterval(interval);
+        interval = null;
 
         localStorage.removeItem("sleepStart");
 
@@ -82,9 +145,11 @@ button.addEventListener("click", () => {
 
         modalDuration.textContent =
             `Ви спали ${hours} год ${minutes} хв`;
+
     }
 
 });
+
 
 // ==========================
 // Таймер
@@ -110,6 +175,7 @@ function updateTimer() {
     `;
 
 }
+
 
 // ==========================
 // Відновлення таймера
@@ -138,15 +204,20 @@ function restoreSleep() {
 
 restoreSleep();
 
+
 // ==========================
 // Закриття модального вікна
 // ==========================
 
-document.querySelector(".close-modal").addEventListener("click", () => {
+const closeSleep =
+    document.querySelector("#sleepModal .close-modal");
+
+closeSleep.addEventListener("click", () => {
 
     modal.style.display = "none";
 
 });
+
 
 // ==========================
 // Вибір рейтингу
@@ -176,6 +247,32 @@ stars.forEach(star => {
 
 });
 
+
+manualStars.forEach(star => {
+
+    star.addEventListener("click", () => {
+
+        manualRating = Number(star.dataset.rating);
+
+        manualStars.forEach(s => {
+
+            if (Number(s.dataset.rating) <= manualRating) {
+
+                s.classList.add("active");
+
+            } else {
+
+                s.classList.remove("active");
+
+            }
+
+        });
+
+    });
+
+});
+
+
 // ==========================
 // Вибір настрою
 // ==========================
@@ -186,13 +283,33 @@ moods.forEach(mood => {
 
         selectedMood = mood.dataset.mood;
 
-        moods.forEach(btn => btn.classList.remove("active"));
+        moods.forEach(btn =>
+            btn.classList.remove("active")
+        );
 
         mood.classList.add("active");
 
     });
 
 });
+
+
+manualMoods.forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        manualMood = button.dataset.mood;
+
+        manualMoods.forEach(btn =>
+            btn.classList.remove("active")
+        );
+
+        button.classList.add("active");
+
+    });
+
+});
+
 
 // ==========================
 // Формат часу
@@ -207,6 +324,7 @@ function formatDuration(minutes) {
     return `${h} год ${m} хв`;
 
 }
+
 
 function getMoodText(mood) {
 
@@ -234,6 +352,7 @@ function getMoodText(mood) {
 
 }
 
+
 // ==========================
 // Завантаження останнього запису
 // ==========================
@@ -244,15 +363,28 @@ async function loadLastSleep() {
 
     const response = await fetch("/sleep/latest");
 
+    if (!response.ok) {
+
+        console.error("Помилка завантаження останнього сну");
+
+        return;
+
+    }
+
     console.log("Відповідь отримана");
 
     const sleep = await response.json();
 
+    lastSleepRecord = sleep;
+
     console.log("sleep =", sleep);
 
     if (!sleep.start_time) {
+
         console.log("Записів немає");
+
         return;
+
     }
 
     const start = new Date(sleep.start_time);
@@ -293,25 +425,56 @@ async function loadLastSleep() {
         `${sleep.mood} ${getMoodText(sleep.mood)}`;
 
     console.log("Все оновлено");
+
 }
+
+
+// ==========================
+// Формат локальної дати
+// ==========================
 
 function formatLocalDate(date) {
 
     const year = date.getFullYear();
 
-    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const month =
+        String(date.getMonth() + 1).padStart(2, "0");
 
-    const day = String(date.getDate()).padStart(2, "0");
+    const day =
+        String(date.getDate()).padStart(2, "0");
 
-    const hours = String(date.getHours()).padStart(2, "0");
+    const hours =
+        String(date.getHours()).padStart(2, "0");
 
-    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const minutes =
+        String(date.getMinutes()).padStart(2, "0");
 
-    const seconds = String(date.getSeconds()).padStart(2, "0");
+    const seconds =
+        String(date.getSeconds()).padStart(2, "0");
 
     return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
 
 }
+
+
+// ==========================
+// Локальна дата для input[type=date]
+// ==========================
+
+function getLocalDateString(date) {
+
+    const year = date.getFullYear();
+
+    const month =
+        String(date.getMonth() + 1).padStart(2, "0");
+
+    const day =
+        String(date.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+
+}
+
 
 // ==========================
 // Збереження сну
@@ -353,13 +516,20 @@ saveButton.addEventListener("click", async () => {
 
     });
 
+    if (!response.ok) {
+
+        alert("Не вдалося зберегти сон.");
+
+        return;
+
+    }
+
     const data = await response.json();
 
     console.log(data);
 
     await loadLastSleep();
     await loadStats();
-    await loadHistory();
 
     alert("Сон успішно збережено!");
 
@@ -371,24 +541,49 @@ saveButton.addEventListener("click", async () => {
     selectedRating = 5;
     selectedMood = "😊";
 
-    stars.forEach(star => star.classList.add("active"));
+    stars.forEach(star =>
+        star.classList.add("active")
+    );
 
-    moods.forEach(btn => btn.classList.remove("active"));
+    moods.forEach(btn =>
+        btn.classList.remove("active")
+    );
+
     moods[0].classList.add("active");
 
+    // Повністю очищаємо стан завершеного сну
     startTime = null;
+    sleeping = false;
+    hours = 0;
+    minutes = 0;
+    interval = null;
 
 });
 
+
+// ==========================
+// Завантаження даних
 // ==========================
 
 loadLastSleep();
 loadStats();
-loadHistory();
+
+
+// ==========================
+// Статистика
+// ==========================
 
 async function loadStats() {
 
     const response = await fetch("/sleep/stats");
+
+    if (!response.ok) {
+
+        console.error("Помилка завантаження статистики");
+
+        return;
+
+    }
 
     const stats = await response.json();
 
@@ -406,66 +601,196 @@ async function loadStats() {
 
 }
 
-async function loadHistory() {
 
-    const response = await fetch("/sleep");
+// ==========================
+// Додавання сну
+// ==========================
 
-    const records = await response.json();
+manualButton.addEventListener("click", () => {
 
-    const history = document.getElementById("historyList");
+    manualModal.style.display = "flex";
 
-    history.innerHTML = "";
+    // Використовуємо локальну дату,
+    // а не UTC через toISOString()
+    manualDate.value =
+        getLocalDateString(new Date());
 
-    records.forEach(record => {
+});
 
-        const start = new Date(record.start_time);
 
-        const end = new Date(record.end_time);
+closeManual.addEventListener("click", () => {
 
-        history.innerHTML += `
+    manualModal.style.display = "none";
 
-        <div class="history-card">
+});
 
-            <h3>
-                ${start.toLocaleDateString("uk-UA")}
-            </h3>
 
-            <p>
-                🕒
-                ${start.toLocaleTimeString("uk-UA", {
-                    hour: "2-digit",
-                    minute: "2-digit"
-                })}
-                —
-                ${end.toLocaleTimeString("uk-UA", {
-                    hour: "2-digit",
-                    minute: "2-digit"
-                })}
-            </p>
+saveManualSleep.addEventListener("click", async () => {
 
-            <p>
-                🌙 ${formatDuration(record.duration)}
-            </p>
+    const date = manualDate.value;
+    const start = manualStart.value;
+    const end = manualEnd.value;
 
-            <p>
-                ${"⭐".repeat(record.rating)}
-                ${"☆".repeat(5 - record.rating)}
-            </p>
+    if (!date || !start || !end) {
 
-            <p>
-                ${record.mood} ${getMoodText(record.mood)}
-            </p>
+        alert("Заповніть дату, початок і кінець сну.");
 
-            ${record.dream ?
-                `<p>💭 ${record.dream}</p>` : ""}
+        return;
 
-            ${record.note ?
-                `<p>📝 ${record.note}</p>` : ""}
+    }
 
-        </div>
+    const startTime = new Date(`${date}T${start}`);
+    const endTime = new Date(`${date}T${end}`);
 
-        `;
+    // Якщо сон закінчився після півночі
+    if (endTime < startTime) {
+
+        endTime.setDate(
+            endTime.getDate() + 1
+        );
+
+    }
+
+    const duration =
+        Math.floor(
+            (endTime - startTime) / 1000 / 60
+        );
+
+    const response = await fetch("/sleep", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+
+            start_time: formatLocalDate(startTime),
+
+            end_time: formatLocalDate(endTime),
+
+            duration: duration,
+
+            rating: manualRating,
+
+            mood: manualMood,
+
+            dream: manualDream.value,
+
+            note: manualNote.value
+
+        })
 
     });
 
-}
+    if (!response.ok) {
+
+        alert("Не вдалося додати сон.");
+
+        return;
+
+    }
+
+    const data = await response.json();
+
+    console.log(data);
+
+    await loadLastSleep();
+    await loadStats();
+
+    manualModal.style.display = "none";
+
+    alert("Сон успішно додано!");
+
+    manualRating = 5;
+    manualMood = "😊";
+
+    manualStars.forEach(star =>
+        star.classList.add("active")
+    );
+
+    manualMoods.forEach(btn =>
+        btn.classList.remove("active")
+    );
+
+    manualMoods[0].classList.add("active");
+
+    manualStart.value = "";
+    manualEnd.value = "";
+
+    manualDream.value = "";
+    manualNote.value = "";
+
+});
+
+
+// ==========================
+// Перегляд останнього запису
+// ==========================
+
+openLastRecord.addEventListener("click", () => {
+
+    if (!lastSleepRecord || !lastSleepRecord.start_time) {
+
+        alert("Записів ще немає 😴");
+
+        return;
+
+    }
+
+    const start =
+        new Date(lastSleepRecord.start_time);
+
+    const end =
+        new Date(lastSleepRecord.end_time);
+
+    document.getElementById("viewDate").textContent =
+        "📅 " +
+        start.toLocaleDateString("uk-UA");
+
+    document.getElementById("viewTime").textContent =
+        "🕒 " +
+        start.toLocaleTimeString("uk-UA", {
+            hour: "2-digit",
+            minute: "2-digit"
+        }) +
+        " — " +
+        end.toLocaleTimeString("uk-UA", {
+            hour: "2-digit",
+            minute: "2-digit"
+        });
+
+    document.getElementById("viewDuration").textContent =
+        "🌙 " +
+        formatDuration(lastSleepRecord.duration);
+
+    document.getElementById("viewRating").textContent =
+        "⭐".repeat(lastSleepRecord.rating) +
+        "☆".repeat(5 - lastSleepRecord.rating);
+
+    document.getElementById("viewMood").textContent =
+        lastSleepRecord.mood +
+        " " +
+        getMoodText(lastSleepRecord.mood);
+
+    document.getElementById("viewDream").textContent =
+        lastSleepRecord.dream
+            ? "💭 " + lastSleepRecord.dream
+            : "💭 Сон не записаний";
+
+    document.getElementById("viewNote").textContent =
+        lastSleepRecord.note
+            ? "📝 " + lastSleepRecord.note
+            : "📝 Нотаток немає";
+
+    recordModal.style.display = "flex";
+
+});
+
+
+closeRecordModal.addEventListener("click", () => {
+
+    recordModal.style.display = "none";
+
+});

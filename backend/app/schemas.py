@@ -15,6 +15,6 @@ class SleepRecordCreate(BaseModel):
 
     mood: str
 
-    note: str
-
-    dream: str
+    note: str = ""
+    
+    dream: str = ""

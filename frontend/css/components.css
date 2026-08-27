@@ -150,6 +150,7 @@
 
 .sleep-button {
 
+    width:100%;
     width: 240px;
     height: 220px;
 
@@ -182,5 +183,354 @@
 .button-icon {
 
     font-size: 58px;
+
+}
+
+.add-sleep-button{
+
+    width:100%;
+
+    padding:18px;
+
+    border:none;
+
+    border-radius:18px;
+
+    background:#ffffff;
+
+    color:var(--primary);
+
+    font-size:18px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    box-shadow:var(--shadow);
+
+}
+
+.add-sleep-button:hover{
+
+    transform:translateY(-3px);
+
+}
+
+.sleep-actions{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:15px;
+
+    width:260px;
+
+}
+/* ==========================
+   Sidebar
+========================== */
+
+.sidebar {
+
+    position: fixed;
+
+    top: 0;
+    left: -300px;
+
+    width: 280px;
+    height: 100vh;
+
+    background: white;
+
+    box-shadow: 5px 0 20px rgba(0,0,0,.15);
+
+    transition: .3s;
+
+    z-index: 1000;
+
+    padding: 30px;
+
+}
+
+.sidebar.active{
+
+    left:0;
+
+}
+
+.sidebar-header{
+
+    margin-bottom:40px;
+
+}
+
+.sidebar-header h2{
+
+    color:var(--primary);
+
+    margin-bottom:8px;
+
+}
+
+.sidebar nav{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:20px;
+
+}
+
+.sidebar nav a{
+
+    text-decoration:none;
+
+    color:#444;
+
+    font-size:18px;
+
+    transition:.2s;
+
+}
+
+.sidebar nav a:hover{
+
+    color:var(--primary);
+
+    transform:translateX(5px);
+
+}
+
+/* Затемнення */
+
+.overlay{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.35);
+
+    opacity:0;
+
+    visibility:hidden;
+
+    transition:.3s;
+
+    z-index:999;
+
+}
+
+.overlay.active{
+
+    opacity:1;
+
+    visibility:visible;
+
+}
+
+/* ==========================
+   Mobile
+========================== */
+
+@media (max-width: 768px) {
+
+    /* ---------- Header ---------- */
+
+    .header {
+
+        margin: 15px auto;
+
+        padding: 15px 18px;
+
+    }
+
+
+    .logo h1 {
+
+        font-size: 38px;
+
+        letter-spacing: 1px;
+
+    }
+
+
+    .logo p {
+
+        font-size: 12px;
+
+    }
+
+
+    .menu-button,
+    .profile-button {
+
+        width: 45px;
+        height: 45px;
+
+        font-size: 18px;
+
+    }
+
+
+    /* ---------- Welcome ---------- */
+
+    .welcome-section {
+
+        margin: 15px auto;
+
+        padding: 0 18px;
+
+    }
+
+
+    .welcome-text h2 {
+
+        font-size: 28px;
+
+        margin-bottom: 6px;
+
+    }
+
+
+    .welcome-text p {
+
+        font-size: 16px;
+
+    }
+
+
+    /* ---------- Sleep Card ---------- */
+
+    .sleep-card {
+
+        flex-direction: column;
+
+        gap: 25px;
+
+        margin: 25px 18px;
+
+        padding: 25px 20px;
+
+        border-radius: 24px;
+
+    }
+
+
+    .sleep-image {
+
+        font-size: 90px;
+
+    }
+
+
+    .sleep-info {
+
+        width: 100%;
+
+        text-align: center;
+
+    }
+
+
+    .sleep-info h2 {
+
+        font-size: 18px;
+
+        margin-bottom: 10px;
+
+    }
+
+
+    .sleep-info h1 {
+
+        font-size: 42px;
+
+        margin-bottom: 12px;
+
+    }
+
+
+    .rating {
+
+        font-size: 26px;
+
+        margin-bottom: 12px;
+
+    }
+
+
+    .sleep-info p {
+
+        font-size: 18px;
+
+    }
+
+
+    /* ---------- Sleep Actions ---------- */
+
+    .sleep-actions {
+
+        width: 100%;
+
+    }
+
+
+    .sleep-button {
+
+        width: 100%;
+
+        height: 150px;
+
+        border-radius: 24px;
+
+    }
+
+
+    .button-icon {
+
+        font-size: 45px;
+
+    }
+
+
+    .add-sleep-button {
+
+        width: 100%;
+
+        padding: 15px;
+
+        font-size: 16px;
+
+    }
+
+
+    /* ---------- Sidebar ---------- */
+
+    .sidebar {
+
+        width: 270px;
+
+        padding: 25px;
+
+    }
+
+
+    .sidebar nav {
+
+        gap: 18px;
+
+    }
+
+
+    .sidebar nav a {
+
+        font-size: 17px;
+
+    }
 
 }

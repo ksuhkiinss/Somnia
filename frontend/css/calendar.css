@@ -1,0 +1,452 @@
+/* ==========================
+   Calendar Page
+========================== */
+
+.calendar-section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 25px 60px;
+}
+
+
+/* ==========================
+   Calendar title
+========================== */
+
+.calendar-title {
+    margin-bottom: 25px;
+}
+
+.calendar-title h2 {
+    margin: 0 0 6px;
+
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.calendar-title p {
+    margin: 0;
+
+    color: #9a91a5;
+    font-size: 15px;
+}
+
+
+/* ==========================
+   Calendar container
+========================== */
+
+.calendar-container {
+    background: #ffffff;
+
+    border-radius: 24px;
+    padding: 25px;
+
+    box-shadow: 0 8px 30px rgba(70, 45, 100, 0.08);
+}
+
+
+/* ==========================
+   Calendar header
+========================== */
+
+.calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 25px;
+
+    margin-bottom: 25px;
+}
+
+.calendar-header h3 {
+    min-width: 180px;
+
+    margin: 0;
+
+    text-align: center;
+
+    font-size: 22px;
+    font-weight: 600;
+}
+
+
+/* ==========================
+   Arrows
+========================== */
+
+.calendar-arrow {
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 50%;
+
+    background: #f1eafa;
+    color: #7652a8;
+
+    font-size: 27px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.calendar-arrow:hover {
+    background: #e6d8f7;
+
+    transform: scale(1.05);
+}
+
+
+/* ==========================
+   Weekdays
+========================== */
+
+.weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+
+    margin-bottom: 8px;
+}
+
+.weekdays div {
+    text-align: center;
+
+    color: #9a91a5;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+/* ==========================
+   Days
+========================== */
+
+.days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+
+    gap: 7px;
+}
+
+
+.day {
+    position: relative;
+
+    min-height: 65px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 15px;
+
+    color: #403847;
+
+    font-size: 15px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.day:hover {
+    background: #f6f1fa;
+}
+
+
+/* ==========================
+   Other month
+========================== */
+
+.day.other-month {
+    color: #c9c3ce;
+}
+
+
+/* ==========================
+   Today
+========================== */
+
+.day.today {
+    background: #7652a8;
+
+    color: #ffffff;
+
+    font-weight: 600;
+}
+
+.day.today:hover {
+    background: #68459a;
+}
+
+
+/* ==========================
+   Selected day
+========================== */
+
+.day.selected {
+    box-shadow: inset 0 0 0 2px #7652a8;
+}
+
+
+/* ==========================
+   Sleep indicator
+========================== */
+
+.day.has-sleep {
+    flex-direction: column;
+    gap: 3px;
+    padding-top: 8px;
+}
+
+/* ==========================
+   Sleep duration indicator
+========================== */
+
+.day-sleep-duration {
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 1;
+}
+
+
+/* ==========================
+   Sleep quality colors
+========================== */
+
+.day.sleep-good .day-sleep-duration {
+    color: #72a879;
+}
+
+.day.sleep-medium .day-sleep-duration {
+    color: #d3a64a;
+}
+
+.day.sleep-bad .day-sleep-duration {
+    color: #c96b6b;
+}
+
+
+/* Today */
+
+.day.today .day-sleep-duration {
+    color: #e9def5;
+}
+
+
+
+/* ==========================
+   Selected day information
+========================== */
+
+.selected-day {
+    margin-top: 20px;
+
+    padding: 22px 25px;
+
+    border-radius: 22px;
+
+    background: #f8f5fb;
+}
+
+.selected-day h3 {
+    margin: 0 0 7px;
+
+    font-size: 19px;
+    font-weight: 600;
+}
+
+.selected-day p {
+    margin: 0;
+
+    color: #8b8392;
+
+    font-size: 14px;
+}
+
+/* ==========================
+   Sleep details
+========================== */
+
+.sleep-details {
+    margin-top: 18px;
+
+    display: grid;
+    gap: 10px;
+}
+
+.sleep-detail {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 12px 14px;
+
+    border-radius: 14px;
+
+    background: #ffffff;
+
+    color: #625a69;
+
+    font-size: 14px;
+}
+
+.sleep-detail strong {
+    color: #403847;
+}
+
+
+/* ==========================
+   Sleep main duration
+========================== */
+
+.sleep-duration {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    margin-bottom: 16px;
+}
+
+.sleep-duration-icon {
+    width: 50px;
+    height: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 15px;
+
+    background: #eee7f8;
+
+    font-size: 24px;
+}
+
+.sleep-duration-text span {
+    display: block;
+
+    color: #9a91a5;
+
+    font-size: 13px;
+
+    margin-bottom: 2px;
+}
+
+.sleep-duration-text strong {
+    display: block;
+
+    color: #403847;
+
+    font-size: 21px;
+}
+
+
+/* ==========================
+   Rating
+========================== */
+
+.sleep-rating {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+
+    margin-top: 15px;
+
+    padding: 8px 12px;
+
+    border-radius: 12px;
+
+    background: #eee7f8;
+
+    color: #7652a8;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+/* ==========================
+   Note
+========================== */
+
+.sleep-note {
+    margin-top: 15px;
+
+    padding: 14px;
+
+    border-radius: 14px;
+
+    background: #ffffff;
+}
+
+.sleep-note-title {
+    margin-bottom: 5px;
+
+    color: #403847;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.sleep-note-text {
+    color: #8b8392;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+}
+
+/* ==========================
+   Empty sleep state
+========================== */
+
+.empty-sleep {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.empty-sleep-icon {
+    width: 52px;
+    height: 52px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 16px;
+
+    background: #eee7f8;
+
+    font-size: 25px;
+}
+
+.empty-sleep-content h4 {
+    margin: 0 0 5px;
+
+    color: #403847;
+
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.empty-sleep-content p {
+    margin: 0;
+
+    color: #9a91a5;
+
+    font-size: 14px;
+    line-height: 1.5;
+}

@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from .database import Base, engine
@@ -20,8 +20,8 @@ app.mount("/css", StaticFiles(directory=FRONTEND_DIR / "css"), name="css")
 app.mount("/assets", StaticFiles(directory=FRONTEND_DIR / "assets"), name="assets")
 app.mount("/js", StaticFiles(directory=FRONTEND_DIR / "js"), name="js")
 
-@app.post("/sleep")
 
+@app.post("/sleep")
 def create_sleep(record: SleepRecordCreate):
 
     db = SessionLocal()
@@ -60,9 +60,121 @@ def create_sleep(record: SleepRecordCreate):
 
     }
 
+
+# ==========================
+# Редагування запису
+# ==========================
+
+@app.put("/sleep/{sleep_id}")
+def update_sleep(sleep_id: int, record: SleepRecordCreate):
+
+    db = SessionLocal()
+
+    sleep = (
+        db.query(models.SleepRecord)
+        .filter(models.SleepRecord.id == sleep_id)
+        .first()
+    )
+
+    if sleep is None:
+
+        db.close()
+
+        raise HTTPException(
+            status_code=404,
+            detail="Запис не знайдено"
+        )
+
+    sleep.start_time = record.start_time
+    sleep.end_time = record.end_time
+    sleep.duration = record.duration
+    sleep.rating = record.rating
+    sleep.mood = record.mood
+    sleep.note = record.note
+    sleep.dream = record.dream
+
+    db.commit()
+
+    db.refresh(sleep)
+
+    db.close()
+
+    return {
+        "message": "Sleep updated!",
+        "id": sleep.id
+    }
+
+
+# ==========================
+# Видалення запису
+# ==========================
+
+@app.delete("/sleep/{sleep_id}")
+def delete_sleep(sleep_id: int):
+
+    db = SessionLocal()
+
+    sleep = (
+        db.query(models.SleepRecord)
+        .filter(models.SleepRecord.id == sleep_id)
+        .first()
+    )
+
+    if sleep is None:
+
+        db.close()
+
+        raise HTTPException(
+            status_code=404,
+            detail="Запис не знайдено"
+        )
+
+    db.delete(sleep)
+
+    db.commit()
+
+    db.close()
+
+    return {
+        "message": "Sleep deleted!",
+        "id": sleep_id
+    }
+
+
 @app.get("/")
 def home():
     return FileResponse(FRONTEND_DIR / "index.html")
+
+
+@app.get("/history")
+def history():
+    return FileResponse(FRONTEND_DIR / "pages" / "history.html")
+
+
+@app.get("/calendar")
+def calendar():
+    return FileResponse(FRONTEND_DIR / "pages" / "calendar.html")
+
+
+@app.get("/dreams")
+def dreams():
+    return FileResponse(FRONTEND_DIR / "pages" / "dreams.html")
+
+
+@app.get("/goals")
+def goals():
+    return FileResponse(FRONTEND_DIR / "pages" / "goals.html")
+
+
+@app.get("/analytics")
+def analytics():
+    return FileResponse(FRONTEND_DIR / "pages" / "analytics.html")
+
+
+@app.get("/settings")
+def settings():
+    return FileResponse(FRONTEND_DIR / "pages" / "settings.html")
+
 
 @app.get("/sleep/latest")
 def latest_sleep():
@@ -90,6 +202,7 @@ def latest_sleep():
         "note": sleep.note
     }
 
+
 @app.get("/sleep")
 def all_sleep():
 
@@ -97,7 +210,7 @@ def all_sleep():
 
     records = (
         db.query(models.SleepRecord)
-        .order_by(desc(models.SleepRecord.id))
+        .order_by(desc(models.SleepRecord.start_time))
         .all()
     )
 
@@ -115,7 +228,8 @@ def all_sleep():
             "note": r.note
         }
         for r in records
-    ] 
+    ]
+
 
 @app.get("/sleep/stats")
 def sleep_stats():
@@ -134,15 +248,34 @@ def sleep_stats():
             "goal_days": 0
         }
 
+    # Загальна тривалість усіх снів
     total_duration = sum(r.duration for r in records)
 
-    average_duration = round(total_duration / len(records))
+    # Групуємо сни за датою початку сну
+    sleep_by_day = {}
 
-    sleep_days = len(records)
+    for r in records:
 
+        sleep_date = r.start_time.date()
+
+        if sleep_date not in sleep_by_day:
+            sleep_by_day[sleep_date] = 0
+
+        sleep_by_day[sleep_date] += r.duration
+
+    # Кількість днів, у яких був хоча б один сон
+    sleep_days = len(sleep_by_day)
+
+    # Середня тривалість сну за день
+    average_duration = round(
+        total_duration / sleep_days
+    )
+
+    # Кількість днів, коли загальна тривалість сну >= 8 годин
     goal_days = sum(
-        1 for r in records
-        if r.duration >= 8 * 60
+        1
+        for duration in sleep_by_day.values()
+        if duration >= 8 * 60
     )
 
     return {

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Somnia — Календар</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/calendar.css">
+
+</head>
+
+<body>
+
+<header class="header">
+
+    <button class="menu-button">✨</button>
+
+    <div class="logo">
+        <h1>SOMNIA</h1>
+        <p>Better sleep, better you.</p>
+    </div>
+
+    <button class="profile-button">👤</button>
+
+</header>
+
+<!-- Бокове меню -->
+
+<div class="sidebar" id="sidebar">
+
+    <div class="sidebar-header">
+
+        <h2>✨ SOMNIA</h2>
+
+        <p>Better sleep, better you.</p>
+
+    </div>
+
+    <nav>
+
+        <a href="/">🏠 Головна</a>
+
+        <a href="/history">📖 Історія</a>
+
+        <a href="/calendar">📅 Календар</a>
+
+        <a href="/dreams">🌙 Щоденник снів</a>
+
+        <a href="/analytics">📊 Аналітика</a>
+
+        <a href="/goals">🎯 Цілі</a>
+
+        <a href="/settings">⚙️ Налаштування</a>
+
+    </nav>
+
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<main>
+
+    <section class="calendar-section">
+
+        <div class="calendar-title">
+            <h2>📅 Календар</h2>
+            <p>Переглядай свій сон за кожен день</p>
+        </div>
+
+
+        <div class="calendar-container">
+
+            <div class="calendar-header">
+
+                <button class="calendar-arrow" id="prevMonth">
+                    ‹
+                </button>
+
+                <h3 id="currentMonth">Серпень 2026</h3>
+
+                <button class="calendar-arrow" id="nextMonth">
+                    ›
+                </button>
+
+            </div>
+
+
+            <div class="weekdays">
+
+                <div>Пн</div>
+                <div>Вт</div>
+                <div>Ср</div>
+                <div>Чт</div>
+                <div>Пт</div>
+                <div>Сб</div>
+                <div>Нд</div>
+
+            </div>
+
+
+            <div class="days" id="calendarDays"></div>
+
+        </div>
+
+
+        <div class="selected-day" id="selectedDay">
+
+            <h3>🌙 Обери день</h3>
+
+            <p>
+                Натисни на дату, щоб переглянути інформацію про сон.
+            </p>
+
+        </div>
+
+    </section>
+
+</main>
+
+<script src="/js/common.js"></script>
+<script src="/js/calendar.js"></script>
+
+</body>
+</html>
